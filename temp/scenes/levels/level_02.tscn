@@ -1,0 +1,104 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_level"]
+[ext_resource type="PackedScene" uid="uid://chygjhirg03p8" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/chaser.tscn" id="3_chaser"]
+[ext_resource type="PackedScene" path="res://scenes/platform.tscn" id="4_platform"]
+[ext_resource type="PackedScene" path="res://scenes/resizable_box.tscn" id="5_box"]
+[ext_resource type="PackedScene" path="res://scenes/goal.tscn" id="6_goal"]
+
+[node name="Level02" type="Node2D" node_paths=PackedStringArray("player", "chaser", "spawn_points_root", "goal")]
+script = ExtResource("1_level")
+level_name = "Subida"
+hint = "Fique em cima de um bloco e puxe a borda de cima para subir. Encolher um bloco atrás de você atrasa o perseguidor."
+player = NodePath("Player")
+chaser = NodePath("Chaser")
+spawn_points_root = NodePath("ChaserSpawns")
+goal = NodePath("Goal")
+first_spawn_delay = 3.0
+min_spawn_distance = 260.0
+max_spawn_distance = 900.0
+max_vertical_distance = 260.0
+fall_limit_y = 1000.0
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="LeftWall" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(-60, -500)
+size = Vector2(60, 1300)
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="Ground" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(0, 600)
+size = Vector2(900, 200)
+
+[node name="Step1" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(900, 470)
+size = Vector2(400, 330)
+
+[node name="Step2" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(1300, 300)
+size = Vector2(500, 500)
+
+[node name="Landing" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(1950, 420)
+size = Vector2(700, 380)
+
+[node name="RightWall" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(2650, -500)
+size = Vector2(60, 1300)
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="BoxA" parent="World" instance=ExtResource("5_box")]
+position = Vector2(790, 580)
+box_size = Vector2(100, 40)
+
+[node name="BoxB" parent="World" instance=ExtResource("5_box")]
+position = Vector2(1180, 445)
+box_size = Vector2(80, 50)
+
+[node name="Goal" parent="." instance=ExtResource("6_goal")]
+position = Vector2(2550, 384)
+
+[node name="ChaserSpawns" type="Node2D" parent="."]
+
+[node name="G1" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(40, 574)
+
+[node name="G2" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(400, 574)
+
+[node name="G3" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(650, 574)
+
+[node name="S1a" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(960, 444)
+
+[node name="S1b" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1260, 444)
+
+[node name="S2a" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1360, 274)
+
+[node name="S2b" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1650, 274)
+
+[node name="L1" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(2000, 394)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(160, 560)
+collision_mask = 2
+respawn_on_squash = false
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(120, -40)
+limit_left = -60
+limit_top = -150
+limit_right = 2710
+limit_bottom = 800
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="Chaser" parent="." instance=ExtResource("3_chaser")]
+position = Vector2(40, 574)

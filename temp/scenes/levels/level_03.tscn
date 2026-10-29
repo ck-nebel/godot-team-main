@@ -1,0 +1,120 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_level"]
+[ext_resource type="PackedScene" uid="uid://chygjhirg03p8" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/chaser.tscn" id="3_chaser"]
+[ext_resource type="PackedScene" path="res://scenes/platform.tscn" id="4_platform"]
+[ext_resource type="PackedScene" path="res://scenes/resizable_box.tscn" id="5_box"]
+[ext_resource type="PackedScene" path="res://scenes/goal.tscn" id="6_goal"]
+
+[node name="Level03" type="Node2D" node_paths=PackedStringArray("player", "chaser", "spawn_points_root", "goal")]
+script = ExtResource("1_level")
+level_name = "Fantasma"
+hint = "Este perseguidor atravessa paredes, mas é mais lento. Diminua o bloco do túnel e use o outro como elevador."
+player = NodePath("Player")
+chaser = NodePath("Chaser")
+spawn_points_root = NodePath("ChaserSpawns")
+goal = NodePath("Goal")
+first_spawn_delay = 2.5
+min_spawn_distance = 300.0
+max_spawn_distance = 1000.0
+max_vertical_distance = 9999.0
+fall_limit_y = 900.0
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="LeftWall" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(-60, -500)
+size = Vector2(60, 1220)
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="GroundA" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(0, 560)
+size = Vector2(1700, 160)
+
+[node name="TunnelRoof" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(760, 380)
+size = Vector2(540, 80)
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="HighGround" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(1700, 340)
+size = Vector2(1100, 380)
+
+[node name="RightWall" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(2800, -500)
+size = Vector2(60, 1220)
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="TunnelBox" parent="World" instance=ExtResource("5_box")]
+position = Vector2(1030, 512)
+box_size = Vector2(160, 96)
+
+[node name="LiftBox" parent="World" instance=ExtResource("5_box")]
+position = Vector2(1610, 530)
+box_size = Vector2(100, 60)
+
+[node name="HintTunnel" type="Label" parent="World"]
+offset_left = 880.0
+offset_top = 330.0
+offset_right = 1140.0
+offset_bottom = 354.0
+theme_override_colors/font_color = Color(0.8, 0.88, 1, 0.75)
+theme_override_font_sizes/font_size = 16
+text = "diminua o bloco do túnel"
+
+[node name="HintLift" type="Label" parent="World"]
+offset_left = 1400.0
+offset_top = 430.0
+offset_right = 1660.0
+offset_bottom = 454.0
+theme_override_colors/font_color = Color(0.8, 0.88, 1, 0.75)
+theme_override_font_sizes/font_size = 16
+text = "suba no bloco e puxe a borda de cima"
+
+[node name="Goal" parent="." instance=ExtResource("6_goal")]
+position = Vector2(2650, 304)
+
+[node name="ChaserSpawns" type="Node2D" parent="."]
+
+[node name="P1" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(40, 300)
+
+[node name="P2" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(300, 160)
+
+[node name="P3" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(650, 260)
+
+[node name="P4" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1000, 230)
+
+[node name="P5" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1350, 200)
+
+[node name="P6" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1600, 160)
+
+[node name="P7" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1950, 200)
+
+[node name="P8" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(2250, 160)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(200, 520)
+collision_mask = 2
+respawn_on_squash = false
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(120, -40)
+limit_left = -60
+limit_top = -100
+limit_right = 2860
+limit_bottom = 720
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="Chaser" parent="." instance=ExtResource("3_chaser")]
+position = Vector2(40, 300)
+mode = 1

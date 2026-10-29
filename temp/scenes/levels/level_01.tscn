@@ -1,0 +1,116 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_level"]
+[ext_resource type="PackedScene" uid="uid://chygjhirg03p8" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/chaser.tscn" id="3_chaser"]
+[ext_resource type="PackedScene" path="res://scenes/platform.tscn" id="4_platform"]
+[ext_resource type="PackedScene" path="res://scenes/resizable_box.tscn" id="5_box"]
+[ext_resource type="PackedScene" path="res://scenes/goal.tscn" id="6_goal"]
+
+[node name="Level01" type="Node2D" node_paths=PackedStringArray("player", "chaser", "spawn_points_root", "goal")]
+script = ExtResource("1_level")
+level_name = "Primeiros passos"
+hint = "Arraste as bordas dos blocos azuis com o mouse para aumentar ou diminuir. Fuja para a direita!"
+player = NodePath("Player")
+chaser = NodePath("Chaser")
+spawn_points_root = NodePath("ChaserSpawns")
+goal = NodePath("Goal")
+first_spawn_delay = 4.0
+min_spawn_distance = 260.0
+max_spawn_distance = 900.0
+max_vertical_distance = 260.0
+fall_limit_y = 900.0
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="LeftWall" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(-60, -300)
+size = Vector2(60, 1020)
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="GroundA" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(0, 560)
+size = Vector2(1000, 160)
+
+[node name="GroundB" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(1000, 400)
+size = Vector2(700, 320)
+
+[node name="GroundC" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(2000, 400)
+size = Vector2(800, 320)
+
+[node name="RightWall" parent="World" instance=ExtResource("4_platform")]
+position = Vector2(2800, -300)
+size = Vector2(60, 1020)
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="StepBox" parent="World" instance=ExtResource("5_box")]
+position = Vector2(900, 530)
+box_size = Vector2(120, 60)
+
+[node name="BridgeBox" parent="World" instance=ExtResource("5_box")]
+position = Vector2(1600, 380)
+box_size = Vector2(120, 40)
+
+[node name="HintStep" type="Label" parent="World"]
+offset_left = 760.0
+offset_top = 420.0
+offset_right = 1020.0
+offset_bottom = 444.0
+theme_override_colors/font_color = Color(0.8, 0.88, 1, 0.75)
+theme_override_font_sizes/font_size = 16
+text = "puxe a borda de cima do bloco"
+
+[node name="HintBridge" type="Label" parent="World"]
+offset_left = 1480.0
+offset_top = 300.0
+offset_right = 1740.0
+offset_bottom = 324.0
+theme_override_colors/font_color = Color(0.8, 0.88, 1, 0.75)
+theme_override_font_sizes/font_size = 16
+text = "estique o bloco até o outro lado"
+
+[node name="Goal" parent="." instance=ExtResource("6_goal")]
+position = Vector2(2650, 364)
+
+[node name="ChaserSpawns" type="Node2D" parent="."]
+
+[node name="A1" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(40, 534)
+
+[node name="A2" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(420, 534)
+
+[node name="A3" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(760, 534)
+
+[node name="B1" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1060, 374)
+
+[node name="B2" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(1380, 374)
+
+[node name="C1" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(2060, 374)
+
+[node name="C2" type="Marker2D" parent="ChaserSpawns"]
+position = Vector2(2300, 374)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(300, 520)
+collision_mask = 2
+respawn_on_squash = false
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(120, -40)
+limit_left = -60
+limit_top = -100
+limit_right = 2860
+limit_bottom = 720
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="Chaser" parent="." instance=ExtResource("3_chaser")]
+position = Vector2(40, 534)
+max_speed = 190.0

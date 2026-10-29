@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cg03lty0tm31w"]
+
+[ext_resource type="PackedScene" uid="uid://chygjhirg03p8" path="res://scenes/player.tscn" id="1_j5px3"]
+[ext_resource type="PackedScene" path="res://scenes/resizable_box.tscn" id="2_twpsu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mik4o"]
+size = Vector2(1153, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twpsu"]
+size = Vector2(1153, 20)
+
+[node name="Root" type="Node2D" unique_id=214371351]
+
+[node name="Player" parent="." unique_id=1474655097 instance=ExtResource("1_j5px3")]
+position = Vector2(620, 190)
+collision_mask = 2
+
+[node name="World" type="Node2D" parent="." unique_id=511499356]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World" unique_id=11924137]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D" unique_id=762631588]
+position = Vector2(576.5, 638)
+shape = SubResource("RectangleShape2D_mik4o")
+
+[node name="ColorRect" type="ColorRect" parent="World/StaticBody2D" unique_id=1875357475]
+offset_top = 628.0
+offset_right = 1153.0
+offset_bottom = 648.0
+color = Color(1, 0.86547554, 0.699255, 1)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="World" unique_id=1510361800]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D2" unique_id=1030225702]
+position = Vector2(1308, 310)
+shape = SubResource("RectangleShape2D_twpsu")
+
+[node name="ColorRect" type="ColorRect" parent="World/StaticBody2D2" unique_id=87920796]
+offset_left = 731.0
+offset_top = 300.0
+offset_right = 1884.0
+offset_bottom = 320.0
+color = Color(0.95923406, 0.853464, 0.9359138, 1)
+
+[node name="ResizableBox" parent="World" unique_id=410729901 instance=ExtResource("2_twpsu")]
+position = Vector2(456, 413)
+
+[node name="ResizableBox2" parent="World" unique_id=678523736 instance=ExtResource("2_twpsu")]
+position = Vector2(453, 563)
+
+[node name="ResizableBox3" parent="World" unique_id=1246951351 instance=ExtResource("2_twpsu")]
+position = Vector2(438, 133)
+
+[node name="ResizableBox4" parent="World" unique_id=1352958307 instance=ExtResource("2_twpsu")]
+position = Vector2(464, 351)
